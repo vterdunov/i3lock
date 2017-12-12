@@ -11,8 +11,31 @@
   grade: devel # must be 'stable' to release into candidate/stable channels
   confinement: devmode # use 'strict' once you have the right plugs and slots
 
+  apps:
+    i3lock:
+      command: i3lock
+
   parts:
-    my-part:
-      # See 'snapcraft plugins'
-      plugin: nil
-  
+    i3lock:
+      plugin: autotools
+      source: 'https://github.com/vterdunov/i3lock.git'
+      source-type: git
+      prepare: |
+        autoreconf -fi
+      build: |
+        mkdir -p build && \
+        cd build && \
+        ../configure && \
+        make -j CFLAGS="-Wformat -Wformat-security -Wextra -Wno-unused-parameter -Werror"
+      build-packages:
+        - clang-format-3.5
+        - pkg-config
+        - libpam0g-dev
+        - libcairo2-dev
+        - libxcb1-dev
+        - libxcb-dpms0-dev
+        - libxcb-image0-dev
+        - libxcb-util0-dev
+        - libev-dev
+        - libxcb-xinerama0-dev
+        - libxcb-xkb-dev
