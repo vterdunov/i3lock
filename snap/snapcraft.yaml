@@ -17,18 +17,11 @@
 
   parts:
     i3lock:
+      source: .
       plugin: autotools
-      source: 'https://github.com/vterdunov/i3lock.git'
-      source-type: git
-      prepare: |
-        autoreconf -fi
-      build: |
-        mkdir -p build && \
-        cd build && \
-        ../configure && \
-        make -j CFLAGS="-Wformat -Wformat-security -Wextra -Wno-unused-parameter -Werror"
+      prepare:
+        - autoreconf -fi
       build-packages:
-        - clang-format-3.5
         - pkg-config
         - libpam0g-dev
         - libcairo2-dev
@@ -39,3 +32,6 @@
         - libev-dev
         - libxcb-xinerama0-dev
         - libxcb-xkb-dev
+        - libxcb-randr0-dev
+        - libxkbcommon-x11-dev
+        - libxkbcommon-dev
